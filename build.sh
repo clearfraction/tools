@@ -13,6 +13,4 @@ dnf builddep *.spec
 
 
 # build the package
-rpmbuild -bb *.spec --define "_sourcedir $PWD"'
- 
-
+rpmbuild -bb *.spec --define "_sourcedir $PWD"
