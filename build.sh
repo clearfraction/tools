@@ -9,7 +9,7 @@ chmod +x /usr/bin/spectool
 dnf config-manager --add-repo https://download.clearlinux.org/current/x86_64/os/
 dnf -y groupinstall build srpm-build
 spectool -g *.spec
-dnf builddep *.spec
+dnf -y builddep *.spec
 
 
 # build the package
