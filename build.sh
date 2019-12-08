@@ -22,3 +22,4 @@ if [ $count != 0 ]
 then 
 echo true
 fi 
+echo $count
