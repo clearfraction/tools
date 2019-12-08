@@ -18,7 +18,7 @@ rpmbuild -bb *.spec --define "_sourcedir $PWD"
 
 # deployment
 echo "start deployment"
-count=`ls -1 /rpmpbuild/RPMS/*/*.rpm 2>/dev/null | wc -l`
+count=`ls -1 /rpmbuild/RPMS/*/*.rpm 2>/dev/null | wc -l`
 if [ $count != 0 ]
 then 
 echo true
