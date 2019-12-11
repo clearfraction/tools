@@ -3,7 +3,7 @@
 # install rpm devtools
 cd /home
 swupd update
-swupd bundle-add package-utils curl
+swupd bundle-add package-utils curl git
 curl -L https://gist.github.com/paulcarroty/ec7133a6d41762e23cdacc75dab69423/raw/9869938ddb4471b177d27de8bffdea7fd4673099/spectool -o /usr/bin/spectool
 chmod +x /usr/bin/spectool
 
