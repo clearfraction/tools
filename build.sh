@@ -20,7 +20,8 @@ rpmbuild -bb *.spec --define "_sourcedir $PWD"
 echo "start deployment"
 count=`ls -1 /rpmbuild/RPMS/*/*.rpm 2>/dev/null | wc -l`
 if [ $count != 0 ]
-then 
+then
+git config --system --unset credential.helper
 git clone https://paulcarroty:$GITLAB_API_KEY@gitlab.com/clearfraction/repository.git /tmp/repository
 mv /rpmbuild/RPMS/*/*.rpm /tmp/repository
 createrepo_c --database --compatibility /tmp/repository
