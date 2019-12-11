@@ -26,5 +26,5 @@ mv /rpmbuild/RPMS/*/*.rpm /tmp/repository
 createrepo_c --database --compatibility /tmp/repository
 cd /tmp/repository && git checkout -b repos && git add .
 git -c user.name='CI' -c user.email='ci@ci.com' commit -m 'rebuild the repositories'
-git push -f https://paulcarroty:$GITLAB_API_KEY@gitlab.com/clearfraction/repository.git repos
+git -c user.name='CI' -c user.email='ci@ci.com' push -f origin repos
 fi 
