@@ -26,7 +26,7 @@ git clone https://gitlab.com/clearfraction/repository.git /tmp/repository
 mv /rpmbuild/RPMS/*/*.rpm /tmp/repository
 createrepo_c --database --compatibility /tmp/repository
 cd /tmp/repository && rm -rvf .git && git init && git checkout -b repos
-git -c user.name='GitlabCI' -c user.email='gitlab@gitlab.com' add .
-git -c user.name='GitlabCI' -c user.email='gitlab@gitlab.com'  -m 'rebuild the repositories'
-git -c user.name='GitlabCI' -c user.email='gitlab@gitlab.com' push -f https://paulcarroty:$GITLAB_API_KEY@gitlab.com/clearfraction/repository.git repos
+git add .
+git -c user.name='GitlabCI' -c user.email='gitlab@gitlab.com' commit  -m 'rebuild the repositories'
+git push -f https://paulcarroty:$GITLAB_API_KEY@gitlab.com/clearfraction/repository.git repos
 fi 
