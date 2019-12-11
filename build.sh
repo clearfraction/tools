@@ -22,9 +22,7 @@ count=`ls -1 /rpmbuild/RPMS/*/*.rpm 2>/dev/null | wc -l`
 if [ $count != 0 ]
 then
 git config --global http.emptyAuth true
-git config --global user.email "paulcarroty@riseup.net"
-git config --global user.name "Pavlo Rudyi"
-git clone https://paulcarroty:$GITLAB_API_KEY@gitlab.com/clearfraction/repository.git /tmp/repository
+git clone https://gitlab.com/clearfraction/repository.git /tmp/repository
 mv /rpmbuild/RPMS/*/*.rpm /tmp/repository
 createrepo_c --database --compatibility /tmp/repository
 cd /tmp/repository && rm -rvf .git && git init && git checkout -b repos && git add .
