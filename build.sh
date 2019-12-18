@@ -15,7 +15,8 @@ spectool -g *.spec
 dnf -q -y builddep *.spec
 
 # build the package
-rpmbuild --quiet -bb *.spec --define "_sourcedir $PWD"
+# rpmbuild --quiet  - super useful to cut the logs
+rpmbuild -bb *.spec --define "_sourcedir $PWD"
 
 # deployment
 echo "start deployment"
