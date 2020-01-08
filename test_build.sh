@@ -40,7 +40,7 @@ dnf config-manager --add-repo https://download.clearlinux.org/current/x86_64/os/
 dnf config-manager --add-repo https://gitlab.com/clearfraction/repository/raw/repos/
 dnf -q -y groupinstall build srpm-build
 # Cloning repository
-git clone https://github.com/clearfraction/${namegit}.git && pushd ${namegit}
+rm -rf ${namegit} && git clone https://github.com/clearfraction/${namegit}.git && pushd ${namegit}
 # Downloading sources
 spectool -g *.spec
 # Installing build dependencies
