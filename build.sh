@@ -16,15 +16,15 @@ dnf -q -y builddep *.spec
 
 # build the package
 # rpmbuild --quiet  - super useful to cut the logs
-rpmbuild --quiet -bb *.spec --define "_sourcedir $PWD"
+rpmbuild --quiet -bb *.spec --define "_topdir $PWD" --define "_sourcedir $PWD"
 
 # deployment
 echo "start deployment"
-count=`ls -1 /rpmbuild/RPMS/*/*.rpm 2>/dev/null | wc -l`
+count=`ls -1 $PWD/RPMS/*/*.rpm 2>/dev/null | wc -l`
 if [ $count != 0 ]
 then
 git clone -b repos https://gitlab.com/clearfraction/repository.git /tmp/repository
-mv /rpmbuild/RPMS/*/*.rpm /tmp/repository
+mv $PWD/RPMS/*/*.rpm /tmp/repository
 createrepo_c --database --compatibility /tmp/repository
 cd /tmp/repository && rm -rf .git && git init && git checkout -b repos
 git add .
