@@ -47,7 +47,8 @@ spectool -g *.spec
 dnf -q -y builddep *.spec
 # build the package
 # rpmbuild --quiet  - super useful to cut the logs
-rpmbuild -bb *.spec --define "_topdir $PWD" --define "_sourcedir $PWD"
+rpmbuild --define "_topdir $PWD" --define "_sourcedir $PWD" -bs *.spec
+rpmbuild --define "_topdir $PWD" --rebuild $PWD/SRPMS/*.src.rpm
 
 # Test install
 pushd $PWD/RPMS
