@@ -50,7 +50,7 @@ spectool -g *.spec
 dnf -q -y builddep *.spec
 # build the package
 # rpmbuild --quiet  - super useful to cut the logs
-rpmbuild --define "_topdir $PWD" --define "_sourcedir $PWD" -bs *.spec && rpmbuild --define "_topdir $PWD" --rebuild $PWD/SRPMS/*.src.rpm
+rpmbuild --define "_topdir $PWD" --define "_sourcedir $PWD" -bs *.spec && rpmbuild --define "_topdir $PWD" --define "debug_package %{nil}" --rebuild $PWD/SRPMS/*.src.rpm
 # Test install
 pushd ${directory}/${namegit}/RPMS/x86_64/
 dnf -y install *.rpm
