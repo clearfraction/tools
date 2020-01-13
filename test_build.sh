@@ -27,32 +27,47 @@ exit
 }
 
 
+clear_proxy() {
+unset http_proxy
+unset no_proxy 
+unset https_proxy
+}
+
 #  BEGIN THE PROGRAM
 readargs "$@"
 
+clear_proxy
 # Absolute paths
 directory=/root/rpmbuild
 mkdir -p ${directory}/{RPMS,BUILD,SOURCES,SRPMS} && pushd ${directory}
+# Unique .spec file (I hate various spec files in the same repository)
+specfile="${namegit}.spec"
 # install rpm devtools
 swupd update  1>/dev/null
-swupd bundle-add package-utils curl 1>/dev/null
+swupd bundle-add package-utils 1>/dev/null
 curl -L https://gist.github.com/paulcarroty/ec7133a6d41762e23cdacc75dab69423/raw/9869938ddb4471b177d27de8bffdea7fd4673099/spectool -o /usr/bin/spectool
 chmod +x /usr/bin/spectool
 # manage dependencies
 dnf config-manager --add-repo https://download.clearlinux.org/current/x86_64/os/
 dnf config-manager --add-repo https://gitlab.com/clearfraction/repository/raw/repos/
-dnf -q -y groupinstall build srpm-build
+dnf -y groupinstall build srpm-build
 # Cloning repository
 rm -rf ${namegit} && git clone https://github.com/clearfraction/${namegit}.git && pushd ${namegit}  
 # Downloading sources
-spectool -g *.spec
+spectool -g "${specfile}"
 # Installing build dependencies
-dnf -q -y builddep *.spec
+# builddep fails some times (needs a hand)
+dnf -q -y builddep *.spec || dnf -y install $( rpmspec --parse "${specfile}" | grep -i "BuildRequires:" | cut -d' ' -f2 | sed -e 's|[Bb]uild[Rr]equires:||g' | sed -e 's|>=||g' | sed -e 's|<=||g' | xargs)
 # build the package
 # rpmbuild --quiet  - super useful to cut the logs
-rpmbuild --define "_topdir $PWD" --define "_sourcedir $PWD" -bs *.spec && rpmbuild --define "_topdir $PWD" --define "debug_package %{nil}" --rebuild $PWD/SRPMS/*.src.rpm
+rpmbuild --define "_topdir $PWD" --define "_sourcedir $PWD" -bs *.spec && rpmbuild --quiet --define "_topdir $PWD" --define "debug_package %{nil}" --rebuild $PWD/SRPMS/*.src.rpm
 # Test install
-pushd ${directory}/${namegit}/RPMS/x86_64/
+if [ -n ${directory}/${namegit}/RPMS/x86_64 ]; then
+RESULTS="${directory}/${namegit}/RPMS/x86_64/"
+elif [ -n ${directory}/${namegit}/RPMS/noarch ]; then
+RESULTS="${directory}/${namegit}/RPMS/noarch/"
+fi
+pushd "${RESULTS}"
 dnf -y install *.rpm
 popd
  popd
