@@ -18,7 +18,7 @@ dnf -q -y builddep *.spec
 # build the package
 # rpmbuild --quiet  - super useful to cut the logs
 # spectool fails some times (needs a hand) --undefine=_disable_source_fetch
-rpmbuild --quiet -bb *.spec --define "_topdir $PWD" --define "_sourcedir $PWD" --undefine=_disable_source_fetch --define "debug_package %{nil}"
+rpmbuild --quiet -bb *.spec --define "_topdir $PWD" --define "_sourcedir $PWD" --undefine=_disable_source_fetch --define "debug_package %{nil}" --define "abi_package %{nil}"
 
 # deployment
 count=`ls -1 $PWD/RPMS/*/*.rpm 2>/dev/null | wc -l`
