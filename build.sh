@@ -16,7 +16,8 @@ dnf -q -y builddep *.spec
 
 # build the package
 # rpmbuild --quiet  - super useful to cut the logs
-rpmbuild --quiet -bb *.spec --define "_topdir $PWD" --define "_sourcedir $PWD"
+# spectool fails some times (needs a hand) --undefine=_disable_source_fetch
+rpmbuild --quiet -bb *.spec --define "_topdir $PWD" --define "_sourcedir $PWD" --undefine=_disable_source_fetch --define "debug_package %{nil}"
 
 # deployment
 echo "start deployment"
