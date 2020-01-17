@@ -50,7 +50,7 @@ chmod +x /usr/bin/spectool
 # manage dependencies
 dnf config-manager --add-repo https://download.clearlinux.org/current/x86_64/os/
 dnf config-manager --add-repo https://gitlab.com/clearfraction/repository/raw/repos/
-dnf -y groupinstall build srpm-build
+dnf -y groupinstall build srpm-build && dnf -y install ffsend
 # Cloning repository
 rm -rf ${namegit} && git clone https://github.com/clearfraction/${namegit}.git && pushd ${namegit}  
 # Downloading sources
@@ -71,4 +71,5 @@ fi
 pushd "${RESULTS}"
 dnf -y install *.rpm
 popd
+ffsend --upload --expiry-time 5m --no-interact --yes "${RESULTS}" --copy
  popd
