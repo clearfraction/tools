@@ -71,5 +71,5 @@ fi
 pushd "${RESULTS}"
 dnf -y install *.rpm
 popd
-ffsend --upload --expiry-time 5m --no-interact --yes "${RESULTS}" --copy
+ffsend upload -I -y -t 86400 "${RESULTS}" --copy
  popd
