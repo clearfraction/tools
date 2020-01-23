@@ -1,5 +1,15 @@
 #!/bin/bash
 
+clear_proxy() {
+unset http_proxy
+unset no_proxy 
+unset https_proxy
+}
+
+#  BEGIN THE PROGRAM
+
+clear_proxy
+
 # install rpm devtools
 cd /home
 swupd update  1>/dev/null
