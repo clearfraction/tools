@@ -15,8 +15,7 @@ cd /home
 swupd bundle-add package-utils curl  1>/dev/null
 
 # manage dependencies
-#dnf config-manager --add-repo https://cdn.download.clearlinux.org/current/x86_64/os/
-dnf config-manager --add-repo https://cdn.download.clearlinux.org/releases/32800/clear/x86_64/os/
+dnf config-manager --add-repo https://cdn.download.clearlinux.org/current/x86_64/os/
 dnf config-manager --add-repo https://gitlab.com/clearfraction/repository/raw/repos/
 dnf -q -y groupinstall build srpm-build
 dnf -q -y builddep *.spec
