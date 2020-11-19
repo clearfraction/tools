@@ -39,5 +39,5 @@ createrepo_c --database --compatibility /tmp/repository
 cd /tmp/repository && rm -rf .git && git init && git checkout -b repos
 git add .
 git -c user.name='GitlabCI' -c user.email='gitlab@gitlab.com' commit -m 'rebuild the repositories'
-git push -f https://:$GITLAB_API_KEY@gitlab.com/clearfraction/repository.git repos
+git push -f https://paulcarroty:$GITLAB_API_KEY@gitlab.com/clearfraction/repository.git repos
 fi 
