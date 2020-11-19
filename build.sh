@@ -11,6 +11,8 @@ unset https_proxy
 clear_proxy
 
 # install rpm devtools
+echo "Check the length of GL env key: "
+env | grep -i gitlab | wc -c
 cd /home
 swupd bundle-add package-utils curl  1>/dev/null
 
