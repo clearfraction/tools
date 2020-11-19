@@ -27,15 +27,15 @@ dnf -q -y builddep *.spec
 rpmbuild --quiet -bb *.spec --define "_topdir $PWD" --define "_sourcedir $PWD" --undefine=_disable_source_fetch --define "debug_package %{nil}" --define "abi_package %{nil}"
 
 # deployment
-echo "start deployment"
 count=`ls -1 $PWD/RPMS/*/*.rpm 2>/dev/null | wc -l`
 if [ $count != 0 ]
 then
-git clone -b repos https://gitlab.com/clearfraction/repository.git /tmp/repository
+echo "Start deployment..."
+git clone -b repos https://:$GITLAB_API_KEY@gitlab.com/clearfraction/repository.git /tmp/repository
 mv $PWD/RPMS/*/*.rpm /tmp/repository
 createrepo_c --database --compatibility /tmp/repository
 cd /tmp/repository && rm -rf .git && git init && git checkout -b repos
 git add .
-git -c user.name='GitlabCI' -c user.email='gitlab@gitlab.com' commit  -m 'rebuild the repositories'
-git push -f https://:$GITLAB_API_KEY@gitlab.com/clearfraction/repository.git repos
+git -c user.name='GitlabCI' -c user.email='gitlab@gitlab.com' commit -m 'rebuild the repositories'
+git push -f repos
 fi 
