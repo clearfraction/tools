@@ -36,8 +36,9 @@ echo "Start deployment..."
 git clone -b repos https://gitlab.com/clearfraction/repository.git /tmp/repository
 mv $PWD/RPMS/*/*.rpm /tmp/repository
 createrepo_c --database --compatibility /tmp/repository
-cd /tmp/repository && rm -rf .git && git init && git checkout -b repos
+cd /tmp/repository && git checkout -b repos
+# && rm -rf .git && git init
 git add .
-git -c user.name='GitlabCI' -c user.email='gitlab@gitlab.com' commit -m 'rebuild the repositories'
+git -c user.name='GitlabCI' -c user.email='gitlab@gitlab.com' commit -m 'rebuild the repository'
 git push -f https://paulcarroty:$GITLAB_API_KEY@gitlab.com/clearfraction/repository.git repos
 fi 
