@@ -1,18 +1,11 @@
 #!/bin/bash
 
-clear_proxy() {
+# clear proxy
 unset http_proxy
 unset no_proxy 
 unset https_proxy
-}
-
-#  BEGIN THE PROGRAM
-
-clear_proxy
 
 # install rpm devtools
-echo "Check the length of GL env key: "
-env | grep -i gitlab | wc -c
 cd /home
 swupd bundle-add package-utils curl  1>/dev/null
 
@@ -20,7 +13,7 @@ swupd bundle-add package-utils curl  1>/dev/null
 alias dnf='dnf --releasever=latest'
 dnf config-manager --add-repo https://cdn.download.clearlinux.org/current/x86_64/os/
 dnf config-manager --add-repo https://gitlab.com/clearfraction/repository/raw/repos/
-dnf -q -y install dnf rpm-python3
+dnf -q -y install dnf rpm-python3 python-dateutil-python3
 dnf -q -y groupinstall build srpm-build
 dnf -q -y builddep *.spec
 
