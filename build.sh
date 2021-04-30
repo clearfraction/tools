@@ -11,10 +11,10 @@ swupd update --quiet
 swupd bundle-add curl dnf --quiet 
 
 # manage dependencies
+shopt -s expand_aliases && alias dnf='dnf --releasever=latest --disableplugin=changelog'
 dnf -q config-manager \
     --add-repo https://gitlab.com/clearfraction/repository/raw/repo \
-    --add-repo https://cdn.download.clearlinux.org/current/x86_64/os \
-    --setopt=releasever=latest
+    --add-repo https://cdn.download.clearlinux.org/current/x86_64/os
 dnf -q -y groupinstall build srpm-build
 dnf -q -y builddep *.spec
 
