@@ -11,12 +11,12 @@ swupd update --quiet
 swupd bundle-add curl dnf --quiet 
 
 # manage dependencies
-shopt -s expand_aliases && alias dnf='dnf --releasever=latest --disableplugin=changelog'
-dnf -q config-manager \
+shopt -s expand_aliases && alias dnf='dnf -q -y --releasever=latest --disableplugin=changelog'
+dnf config-manager \
     --add-repo https://cdn.download.clearlinux.org/current/x86_64/os \
     --add-repo https://gitlab.com/clearfraction/repository/-/raw/repos
-dnf -q -y groupinstall build srpm-build && dnf install createrepo_c
-dnf -q -y builddep *.spec
+dnf groupinstall build srpm-build && dnf install createrepo_c
+dnf builddep *.spec
 
 # build the package
 # rpmbuild --quiet  - super useful to cut the logs
