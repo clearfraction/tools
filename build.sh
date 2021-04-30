@@ -1,26 +1,29 @@
 #!/bin/bash
 
-# clear proxy
+# disable proxy
 unset http_proxy
 unset no_proxy 
 unset https_proxy
 
 # install rpm devtools
 cd /home
-swupd bundle-add package-utils curl  1>/dev/null
+swupd --quiet update
+swupd --quiet bundle-add curl dnf
 
 # manage dependencies
-alias dnf='dnf --releasever=latest'
-dnf config-manager --add-repo https://cdn.download.clearlinux.org/current/x86_64/os/
-dnf config-manager --add-repo https://gitlab.com/clearfraction/repository/raw/repos/
-# dnf -q -y install dnf rpm-python3 python-dateutil-python3
+dnf -q config-manager \
+    --add-repo https://gitlab.com/clearfraction/repository/raw/repo \
+    --add-repo https://cdn.download.clearlinux.org/current/x86_64/os \
+    --setopt=releasever=latest
 dnf -q -y groupinstall build srpm-build
 dnf -q -y builddep *.spec
 
 # build the package
 # rpmbuild --quiet  - super useful to cut the logs
 # spectool fails some times (needs a hand) --undefine=_disable_source_fetch
-rpmbuild --quiet -bb *.spec --define "_topdir $PWD" --define "_sourcedir $PWD" --undefine=_disable_source_fetch --define "debug_package %{nil}" --define "abi_package %{nil}"
+rpmbuild --quiet -bb *.spec --define "_topdir $PWD" \
+         --define "_sourcedir $PWD" --undefine=_disable_source_fetch \
+         --define "debug_package %{nil}" --define "abi_package %{nil}"
 
 # deployment
 count=`ls -1 $PWD/RPMS/*/*.rpm 2>/dev/null | wc -l`
