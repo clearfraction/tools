@@ -15,7 +15,7 @@ shopt -s expand_aliases && alias dnf='dnf --releasever=latest --disableplugin=ch
 dnf -q config-manager \
     --add-repo https://cdn.download.clearlinux.org/current/x86_64/os \
     --add-repo https://gitlab.com/clearfraction/repository/-/raw/repos
-dnf -q -y groupinstall build srpm-build
+dnf -q -y groupinstall build srpm-build && dnf install createrepo_c
 dnf -q -y builddep *.spec
 
 # build the package
