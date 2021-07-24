@@ -31,6 +31,7 @@ then
 echo "Start deployment..."
 git clone -b repos https://gitlab.com/clearfraction/repository.git /tmp/repository
 mv $PWD/RPMS/*/*.rpm /tmp/repository
+rm -f $( dnf -y repomanage --keep=2 --old /tmp/repository)
 createrepo_c --database --compatibility /tmp/repository
 cd /tmp/repository && rm -rf *debuginfo*
 git add .
