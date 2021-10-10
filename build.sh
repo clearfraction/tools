@@ -18,10 +18,9 @@ dnf config-manager \
 dnf groupinstall build srpm-build && dnf install createrepo_c
 dnf builddep *.spec
 
-# build the package
-# rpmbuild --quiet  - super useful to cut the logs
-# spectool fails some times (needs a hand) --undefine=_disable_source_fetch
+# building the package
 rpmbuild --quiet -bb *.spec --define "_topdir $PWD" \
          --define "_sourcedir $PWD" --undefine=_disable_source_fetch \
          --define "abi_package %{nil}"
-
+# post cleanup
+mv RPMS/*/*.rpm RPMS/
