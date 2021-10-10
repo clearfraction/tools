@@ -25,10 +25,3 @@ rpmbuild --quiet -bb *.spec --define "_topdir $PWD" \
          --define "_sourcedir $PWD" --undefine=_disable_source_fetch \
          --define "abi_package %{nil}"
 
-# deployment
-count=`ls -1 $PWD/RPMS/*/*.rpm 2>/dev/null | wc -l`
-if [ $count != 0 ]
-then
-echo "Start deployment..."
-mv $PWD/RPMS/*/*.rpm /tmp/repository
-fi 
