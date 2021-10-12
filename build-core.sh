@@ -16,11 +16,11 @@ createrepo_c /home/artifact/
 dnf config-manager \
     --add-repo https://cdn.download.clearlinux.org/current/x86_64/os
 dnf groupinstall build srpm-build
-dnf builddep *.spec
+dnf builddep *.spec || { echo "Failed to handle build dependencies"; exit 1; }
 
 # building the package
 rpmbuild --quiet -bb *.spec --define "_topdir $PWD" \
          --define "_sourcedir $PWD" --undefine=_disable_source_fetch \
-         --define "abi_package %{nil}"
+         --define "abi_package %{nil}" || { echo "Build failed"; exit 1; }
 # post cleanup
 mv RPMS/*/*.rpm RPMS/
