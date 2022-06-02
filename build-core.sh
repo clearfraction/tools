@@ -11,7 +11,7 @@ swupd update --quiet
 swupd bundle-add curl dnf --quiet 
 
 # manage dependencies
-shopt -s expand_aliases && alias dnf='dnf -q -y --releasever=latest --disableplugin=changelog,needs_restarting'
+shopt -s expand_aliases && alias dnf='dnf -q -y --releasever=latest --disableplugin=changelog,needs_restarting --max_parallel_downloads=20'
 dnf config-manager \
     --add-repo https://cdn.download.clearlinux.org/current/x86_64/os
 dnf groupinstall build srpm-build
