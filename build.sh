@@ -11,6 +11,7 @@ swupd update --quiet
 swupd bundle-add curl dnf mixer --quiet 
 
 # manage dependencies
+mkdir /etc/dnf && echo "max_parallel_downloads=20" >> /etc/dnf/dnf.conf
 shopt -s expand_aliases && alias dnf='dnf -q -y --releasever=latest --disableplugin=changelog,needs_restarting'
 createrepo_c -q /home/artifact/
 dnf config-manager \
