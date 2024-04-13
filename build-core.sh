@@ -7,7 +7,7 @@ unset https_proxy
 
 # install rpm devtools
 cd /home
-swupd update --quiet 
+swupd update --quiet --retry-delay=1
 swupd bundle-add curl dnf --quiet 
 
 # manage dependencies
