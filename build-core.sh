@@ -15,7 +15,8 @@ shopt -s expand_aliases && alias dnf='dnf -q -y --releasever=latest --disableplu
 echo -e "[main]\nmax_parallel_downloads=20\nretries=30\nfastestmirror=True" >> /etc/dnf/dnf.conf
 # dnf config-manager --add-repo https://cdn.download.clearlinux.org/current/x86_64/os  --add-repo https://download.clearlinux.org/current/x86_64/os --add-repo https://cdn-alt.download.clearlinux.org/current/x86_64/os
 dnf config-manager --add-repo https://cdn.download.clearlinux.org/releases/`curl -s https://cdn.download.clearlinux.org/latest`/clear/x86_64/os/
-dnf groupinstall build srpm-build
+dnf groupinstall build srpm-build 
+dnf install autoconf automake automake-dev binutils bzip2 clr-rpm-config coreutils cpio diffutils elfutils file gawk gcc gcc-dev gettext gettext-bin git glibc-dev glibc-locale glibc-utils grep gzip hostname libc6-dev libcap libtool libtool-dev linux-libc-headers m4 make make netbase nss-altfiles patch pigz pkg-config pkg-config-dev rpm sed shadow systemd-lib tar unzip which xz                 
 dnf builddep *.spec || { echo "Failed to handle build dependencies"; exit 1; }
 
 # building the package
